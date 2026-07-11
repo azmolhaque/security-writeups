@@ -65,6 +65,8 @@ That alone is CWE-1188 (default credentials). But probing further revealed somet
 
 I confirmed this deliberately (login with random characters) rather than assuming it, because "default creds work" and "auth is entirely absent" are different severities and I wanted to claim only the one I could prove.
 
+> 🎥 **Proof:** [`rip-auth-bypass.mp4`](./images/rip-auth-bypass.mp4) — an unedited recording of a login using a random password, landing on the authenticated Roles dashboard.
+
 ## 3. The API layer behind it
 
 A UI-level bypass is a weak finding if the backend still enforces authorization independently. So the next question — the one that separates a screenshot from an actual finding — was: **does the API behind this UI check auth on its own?** It did not.
@@ -78,7 +80,22 @@ HTTP/1.1 200 OK
 []
 ```
 
-An unauthenticated GET returned a valid (empty) JSON array, not a `401`/`403`. An `OPTIONS` probe advertised `GET, POST, HEAD` — the endpoint was built to accept writes as well as reads. Whitelabel error pages identified the backend as Java Spring Boot.
+![Unauthenticated GET /api/roles returns [] with a 200](./images/rip-api-roles-unauth.png)
+
+An unauthenticated GET returned an empty JSON array, not a `401`/`403`. An unauthenticated `OPTIONS` advertised the full write-capable method set:
+
+```console
+$ curl -i -s -k -X OPTIONS "http://rip.photomath.net/api/roles"
+HTTP/1.1 200 OK
+Allow: POST,GET,HEAD,OPTIONS
+Via: 1.1 google
+```
+
+![OPTIONS returns Allow: POST,GET,HEAD,OPTIONS and Via: 1.1 google](./images/rip-api-options-allow.png)
+
+`Allow: POST,GET,HEAD,OPTIONS` shows the endpoint accepts writes (`POST`) with no auth. A `404` on an unmapped path returned Spring Boot's stock error page:
+
+![Spring Boot Whitelabel Error Page](./images/rip-spring-boot-whitelabel.png)
 
 So two independent controls — frontend authentication and backend authorization — were both absent on the same surface. That is the architecturally interesting part, and it is why the finding was *complete*: I didn't stop at "the login is fake," I demonstrated the data layer itself was open.
 
@@ -95,6 +112,8 @@ Google's handling was fast and clean:
 - **Accepted within ~24 hours** and filed to the responsible product team.
 - **Marked Fixed nine days after acceptance** — the endpoint was decommissioned and the hostname began returning `NXDOMAIN`. I independently re-verified the `NXDOMAIN` and reported back.
 - Triaged internally as **P2 / S2**.
+
+![rip.photomath.net now returns DNS_PROBE_FINISHED_NXDOMAIN](./images/rip-nxdomain-fixed.png)
 
 Note *how* it was fixed: not a code patch, not an auth middleware change — the record was pulled and the host stopped resolving. That detail is the whole key to the reward decision, and it's the subject of the next section.
 
