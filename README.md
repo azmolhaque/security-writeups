@@ -1,37 +1,12 @@
-# Security Research & Writeups
+# Security Writeups
 
-Vulnerability research notes and responsible-disclosure writeups by **Md. Azmol Haque Rony**.
+Selected security research and vulnerability writeups by **Md. Azmol Haque Rony** ([@azmolhaque](https://github.com/azmolhaque)).
 
-Listed on the [Google Bug Hunters](https://bughunters.google.com) leaderboard, with findings validated and fixed by Google product teams (credited via Honorable Mentions).
+## 📄 Writeups
 
-The focus of this repo isn't trophy-hunting — it's **clear technical reasoning and honest severity calibration**. Several writeups deliberately analyze *why* a finding was rated the way it was, including cases that earned credit rather than a reward. Knowing the difference is the point.
+### [Anatomy of an Exposed IAM Frontend — Google VRP](./2026-05-exposed-iam-frontend-google-vrp.md)
+A total authentication bypass on a Google-acquisition asset (`rip.photomath.net`) — default credentials, *any* password accepted, and an unauthenticated backend API. Triaged **P2/S2, Fixed in 9 days**, and awarded **credit (Honorable Mention)**, not cash.
 
----
+The writeup does the harder thing: it explains, at a mechanism level, **why "fixed fast" and "not rewarded" were both correct** — the root cause was a stale DNS record on un-migrated acquisition infrastructure, not a defect in an operated system. Includes the repeatable detection method, the *edge-fronted ≠ operated* distinction, a reward-bar counterfactual, and a defender's-eye remediation plan. Full PoC evidence embedded.
 
-## Writeups
-
-| Date | Title | Program | Outcome |
-|---|---|---|---|
-| 2026-05 | [Anatomy of an Exposed IAM Frontend](./2026-05-exposed-iam-frontend-google-vrp.md) | Google VRP | Fixed (P2/S2) · Credit |
-
-*More to come as findings are disclosed and remediated.*
-
----
-
-## How I report
-
-- **Responsible disclosure first.** Nothing is published until the vendor has remediated.
-- **Minimal-impact testing.** I confirm reachability/impact without accessing or modifying data beyond what's strictly necessary.
-- **Calibrated severity.** I describe impact as it actually is — no inflation. Where a finding is lower-severity than it first appears, I say so and explain why.
-
----
-
-## About
-
-Security researcher based in Bangladesh, working on web application security, access-control flaws, and infrastructure misconfiguration.
-
-- **Google Bug Hunters:** listed on the leaderboard; credited via Honorable Mentions
-- **LinkedIn:** [md-azmol-haque-rony](https://www.linkedin.com/in/md-azmol-haque-rony)
-- **Email:** azmolhaque95@gmail.com
-
-> These writeups represent my own independent research and are not affiliated with or endorsed by any vendor mentioned.
+*Reported via Google Bug Hunters (Issue 509594209). Endpoint remediated before publication.*
