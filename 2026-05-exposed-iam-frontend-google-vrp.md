@@ -25,6 +25,7 @@
 - [6. Why this was correctly not rewarded — and what would have changed that](#6-why-this-was-correctly-not-rewarded--and-what-would-have-changed-that)
 - [7. If I were defending this](#7-if-i-were-defending-this)
 - [8. Lessons I'm carrying forward](#8-lessons-im-carrying-forward)
+- [What this finding demonstrates](#what-this-finding-demonstrates)
 - [Timeline](#timeline)
 
 ## Why I'm writing this
@@ -107,6 +108,14 @@ Via: 1.1 google
 
 So two independent controls — frontend authentication and backend authorization — were both absent on the same surface. That is the architecturally interesting part, and it is why the finding was *complete*: I didn't stop at "the login is fake," I demonstrated the data layer itself was open.
 
+> **Reproduction (read-only summary).**
+> 1. Resolve `rip.photomath.net` and load it over plain HTTP (`:443` fails the TLS handshake) — the admin UI (`GestionUsersRolesFrontend`) renders.
+> 2. At the `Bienvenue administrateur` login, submit `admin@photomath.net` with **any** password string → lands on `/dashboard`.
+> 3. `GET /api/roles` with **no** cookie or auth header → `200 OK`, body `[]` (not `401`/`403`).
+> 4. `OPTIONS /api/roles` → `Allow: POST,GET,HEAD,OPTIONS` — write methods advertised without auth.
+>
+> No writes were issued and no records were created or modified; steps 3–4 confirm the control failure without exercising the write path.
+
 **Scope of testing.** I confirmed read reachability and the advertised method set. I did **not** issue writes, create roles, or modify any state. Demonstrating reachability was sufficient to prove the control failure, and stopping there is what safe-harbor expectations require. Claiming the write path *worked* without exercising it would have been overclaiming; noting it was *advertised* is fact.
 
 ## 4. Remediation
@@ -186,6 +195,16 @@ The single control that would have prevented the entire exposure is the identity
 - **Appeals need a new fact, not louder adjectives.** If I can't add concrete, new evidence, escalating the language only erodes credibility with triagers. Restating impact in stronger words is exactly why my appeal didn't (and shouldn't have) changed the outcome.
 - **Edge-fronted is not operated-by.** Where a request routes tells you nothing about who owns the risk. That one distinction is the difference between a rewardable finding and a hygiene note.
 - **Calibration is the skill.** Anyone can find something that looks alarming. The professional move is stating accurately how much it matters — including, and especially, when the honest answer is "less than it first appeared."
+
+## What this finding demonstrates
+
+Read as a work sample, the useful signals here aren't the bug itself — they're how it was handled:
+
+- **Targeted recon, not spray-and-pray** — surfaced via the acquisition-tier scope file plus CT logs, a repeatable method for finding un-migrated infrastructure.
+- **Two-layer control analysis** — I checked whether the backend enforced authorization independently of the login form, not just the UI.
+- **Minimal-impact testing** — confirmed reachability and the advertised write methods without issuing a single write or touching any data.
+- **Severity calibration under pressure** — argued the finding accurately, conceded where my appeal was speculative, and agreed with the credit-only outcome once the evidence was clear.
+- **Coordinated disclosure** — reported through the vendor channel, waited for remediation, re-verified the fix (`NXDOMAIN`), and published only afterward.
 
 ## Timeline
 
