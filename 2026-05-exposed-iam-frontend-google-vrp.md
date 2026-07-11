@@ -11,7 +11,7 @@
 > **CWEs:** CWE-287 (Improper Authentication) · CWE-1188 (Use of Default Credentials) · CWE-319 (Cleartext Transmission)
 > **Asset class:** Google acquisition (Photomath), Tier-1 per `external_domains_acquisitions.asciipb`
 
-**TL;DR** — An administrative IAM interface sat exposed on the public internet on a Google-acquisition subdomain. The login accepted default credentials, then accepted *any* password, and the API behind it answered unauthenticated requests — a complete failure of the authentication layer. Google's product team triaged it P2/S2 and decommissioned it in nine days. The VRP reward panel, separately, awarded credit and no cash. This writeup breaks down the exposure, then does the harder and more useful thing: it explains, at a mechanism level, **why those two decisions are both correct and not in conflict** — and what evidence would have moved it across the reward bar. Calibrating that gap is the real skill.
+**TL;DR** — An administrative IAM interface sat exposed on the public internet on a Google-acquisition subdomain. The login accepted default credentials, then accepted *any* password, and the API behind it answered unauthenticated requests — a complete failure of the authentication layer. Google's product team triaged it P2/S2 and decommissioned it nine days after accepting the report. The VRP reward panel, separately, awarded credit and no cash. This writeup breaks down the exposure, then does the harder and more useful thing: it explains, at a mechanism level, **why those two decisions are both correct and not in conflict** — and what evidence would have moved it across the reward bar. Calibrating that gap is the real skill.
 
 ---
 
