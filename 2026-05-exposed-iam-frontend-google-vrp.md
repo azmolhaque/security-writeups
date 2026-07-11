@@ -69,6 +69,12 @@ I confirmed this deliberately (login with random characters) rather than assumin
 
 ## 3. The API layer behind it
 
+Logging in with a junk password landed on the full administrative dashboard — the visible result of the broken authentication above:
+
+![Administrative IAM dashboard reached with no valid credentials: "Welcome, administrator", a Roles/Users sidebar, a "New role" write control, and an empty record set](./images/rip-photomath-dashboard.png)
+
+*The IAM dashboard (`/dashboard`) reached with no valid credentials — "Welcome, administrator", the Roles/Users management sidebar, the "New role" write control, and no real records (an empty sandbox).*
+
 A UI-level bypass is a weak finding if the backend still enforces authorization independently. So the next question — the one that separates a screenshot from an actual finding — was: **does the API behind this UI check auth on its own?** It did not.
 
 ```http
@@ -98,10 +104,6 @@ Via: 1.1 google
 ![Spring Boot Whitelabel Error Page](./images/rip-spring-boot-whitelabel.png)
 
 So two independent controls — frontend authentication and backend authorization — were both absent on the same surface. That is the architecturally interesting part, and it is why the finding was *complete*: I didn't stop at "the login is fake," I demonstrated the data layer itself was open.
-
-![Authenticated admin dashboard showing the Roles section and an open "Create role" form, with "Welcome, administrator" in the header](./images/rip-photomath-dashboard.png)
-
-*The admin dashboard, reached without valid credentials. Note the empty "Create role" form (a write surface) and the complete absence of real user data — consistent with a non-production/sandbox instance.*
 
 **Scope of testing.** I confirmed read reachability and the advertised method set. I did **not** issue writes, create roles, or modify any state. Demonstrating reachability was sufficient to prove the control failure, and stopping there is what safe-harbor expectations require. Claiming the write path *worked* without exercising it would have been overclaiming; noting it was *advertised* is fact.
 
