@@ -65,7 +65,9 @@ That alone is CWE-1188 (default credentials). But probing further revealed somet
 
 I confirmed this deliberately (login with random characters) rather than assuming it, because "default creds work" and "auth is entirely absent" are different severities and I wanted to claim only the one I could prove.
 
-> 🎥 **Proof:** [`rip-auth-bypass.mp4`](./images/rip-auth-bypass.mp4) — an unedited recording of a login using a random password, landing on the authenticated Roles dashboard.
+**🎥 Proof — a successful login using a random password string, landing on the authenticated Roles dashboard (unedited screen recording):**
+
+https://github.com/user-attachments/assets/dca3d51d-7b64-480f-ab64-b3c625b54832
 
 ## 3. The API layer behind it
 
