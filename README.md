@@ -10,3 +10,8 @@ A total authentication bypass on a Google-acquisition asset (`rip.photomath.net`
 The writeup does the harder thing: it explains, at a mechanism level, **why "fixed fast" and "not rewarded" were both correct** — the root cause was a stale DNS record on un-migrated acquisition infrastructure, not a defect in an operated system. Includes the repeatable detection method, the *edge-fronted ≠ operated* distinction, a reward-bar counterfactual, and a defender's-eye remediation plan. Full PoC evidence embedded.
 
 *Reported via Google Bug Hunters (Issue 509594209). Endpoint remediated before publication.*
+
+🌐 **Also available in 9 languages** — see the language bar at the top of the writeup (English · Español · Français · Deutsch · العربية · हिन्दी · বাংলা · 简体中文 · 日本語).
+
+### [The bug Google fixed in 9 days — and paid me $0 for](./the-9-day-fix-that-paid-nothing.md)
+A short, plain-language version of the same story — written for a general audience. If the full writeup is the engineering deep-dive, this is the five-minute read about *why calibrated judgment matters more than a payout*.

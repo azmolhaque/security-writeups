@@ -129,6 +129,10 @@ Google 的处置迅速而利落：
 - **在受理九天后标记为已修复**——端点被下线，主机名开始返回 `NXDOMAIN`。我独立地重新核验了 `NXDOMAIN` 并回报。
 - 内部定级为 **P2 / S2**。
 
+![Google Issue Tracker status: Accepted (comment #5) and Marked as fixed (comment #6)](../images/rip-tracker-accepted-fixed.png)
+
+*追踪器自身的状态更新——报告次日即受理，九天后标记为已修复。我保留 Google 的原始措辞并略去发件人地址。诚实校准一下：喜庆的「🎉 Nice catch!」是该项目**标准的受理模板**，而非个人夸奖；真正有分量的是 P2/S2 定级与已确认的修复。*
+
 ![rip.photomath.net 现在返回 DNS_PROBE_FINISHED_NXDOMAIN](../images/rip-nxdomain-fixed.png)
 
 请注意它*如何*被修复：不是代码补丁，不是身份验证中间件的改动——记录被撤除，主机停止解析。这个细节正是奖励决定的全部关键，也是下一节的主题。
