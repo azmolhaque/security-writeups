@@ -1,6 +1,6 @@
 # Anatomy of an Exposed IAM Frontend
 
-**A total authentication bypass on a Google-acquisition asset — and a precise account of why it was fixed in nine days but rewarded $0.**
+**A total authentication bypass on a Google-acquisition asset — and a precise account of why it was fixed in nine days, and correctly rewarded $0.**
 
 ![Program](https://img.shields.io/badge/Program-Google_VRP-4285F4)
 ![Status](https://img.shields.io/badge/Status-Fixed-success)
@@ -8,7 +8,7 @@
 ![Reward](https://img.shields.io/badge/Reward-Credit_%2F_Honorable_Mention-lightgrey)
 ![Disclosure](https://img.shields.io/badge/Disclosure-Coordinated-blue)
 
-> **CWEs:** CWE-287 (Improper Authentication) · CWE-1188 (Use of Default Credentials) · CWE-319 (Cleartext Transmission)
+> **CWEs:** [CWE-287](https://cwe.mitre.org/data/definitions/287.html) (Improper Authentication) · [CWE-1188](https://cwe.mitre.org/data/definitions/1188.html) (Use of Default Credentials) · [CWE-319](https://cwe.mitre.org/data/definitions/319.html) (Cleartext Transmission)
 > **Asset class:** Google acquisition (Photomath), Tier-1 per `external_domains_acquisitions.asciipb`
 
 **TL;DR** — An administrative IAM interface sat exposed on the public internet on a Google-acquisition subdomain. The login accepted default credentials, then accepted *any* password, and the API behind it answered unauthenticated requests — a complete failure of the authentication layer. Google's product team triaged it P2/S2 and decommissioned it nine days after accepting the report. The VRP reward panel, separately, awarded credit and no cash. This writeup breaks down the exposure, then does the harder and more useful thing: it explains, at a mechanism level, **why those two decisions are both correct and not in conflict** — and what evidence would have moved it across the reward bar. Calibrating that gap is the real skill.
@@ -27,6 +27,7 @@
 - [8. Lessons I'm carrying forward](#8-lessons-im-carrying-forward)
 - [What this finding demonstrates](#what-this-finding-demonstrates)
 - [Timeline](#timeline)
+- [References](#references)
 
 ## Why I'm writing this
 
@@ -216,6 +217,12 @@ Read as a work sample, the useful signals here aren't the bug itself — they're
 | 2026-05-29 | +24 | Reward panel: **does not meet the bar** → credit / Honorable Mention |
 | 2026-05-29 | +24 | I appealed for reconsideration |
 | 2026-06-02 | +28 | Appeal reviewed and **upheld** — credit-only confirmed (stale-DNS rationale) |
+
+## References
+
+- **MITRE CWE** — the weaknesses this finding maps to: [CWE-287: Improper Authentication](https://cwe.mitre.org/data/definitions/287.html), [CWE-1188: Use of Default Credentials](https://cwe.mitre.org/data/definitions/1188.html), [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html).
+- **[Google Bug Hunters (VRP)](https://bughunters.google.com/)** — the program this was reported through; its rules define what qualifies for a monetary reward versus credit, and underpin the reward decision analyzed in Section 6.
+- **Dangling DNS / subdomain takeover** — the risk class this belongs to: a DNS record that outlives the resource it points at. The detection and prevention controls in Section 7 are the defender's counterpart.
 
 ---
 
