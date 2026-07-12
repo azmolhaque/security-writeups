@@ -1,6 +1,8 @@
 # Anatomy of an Exposed IAM Frontend
 
-**A total authentication bypass on a Google-acquisition asset — and a precise account of why it was fixed in nine days but rewarded $0.**
+**A total authentication bypass on a Google-acquisition asset — and a precise account of why it was fixed in nine days, and correctly rewarded $0.**
+
+**🌐 Read this in your language:** **English** · [Español](./translations/2026-05-exposed-iam-frontend-google-vrp.es.md) · [Français](./translations/2026-05-exposed-iam-frontend-google-vrp.fr.md) · [Deutsch](./translations/2026-05-exposed-iam-frontend-google-vrp.de.md) · [العربية](./translations/2026-05-exposed-iam-frontend-google-vrp.ar.md) · [हिन्दी](./translations/2026-05-exposed-iam-frontend-google-vrp.hi.md) · [বাংলা](./translations/2026-05-exposed-iam-frontend-google-vrp.bn.md) · [简体中文](./translations/2026-05-exposed-iam-frontend-google-vrp.zh.md) · [日本語](./translations/2026-05-exposed-iam-frontend-google-vrp.ja.md)
 
 ![Program](https://img.shields.io/badge/Program-Google_VRP-4285F4)
 ![Status](https://img.shields.io/badge/Status-Fixed-success)
@@ -8,10 +10,10 @@
 ![Reward](https://img.shields.io/badge/Reward-Credit_%2F_Honorable_Mention-lightgrey)
 ![Disclosure](https://img.shields.io/badge/Disclosure-Coordinated-blue)
 
-> **CWEs:** CWE-287 (Improper Authentication) · CWE-1188 (Use of Default Credentials) · CWE-319 (Cleartext Transmission)
+> **CWEs:** [CWE-287](https://cwe.mitre.org/data/definitions/287.html) (Improper Authentication) · [CWE-1188](https://cwe.mitre.org/data/definitions/1188.html) (Use of Default Credentials) · [CWE-319](https://cwe.mitre.org/data/definitions/319.html) (Cleartext Transmission)
 > **Asset class:** Google acquisition (Photomath), Tier-1 per `external_domains_acquisitions.asciipb`
 
-**TL;DR** — An administrative IAM interface sat exposed on the public internet on a Google-acquisition subdomain. The login accepted default credentials, then accepted *any* password, and the API behind it answered unauthenticated requests — a complete failure of the authentication layer. Google's product team triaged it P2/S2 and decommissioned it in nine days. The VRP reward panel, separately, awarded credit and no cash. This writeup breaks down the exposure, then does the harder and more useful thing: it explains, at a mechanism level, **why those two decisions are both correct and not in conflict** — and what evidence would have moved it across the reward bar. Calibrating that gap is the real skill.
+**TL;DR** — An administrative IAM interface sat exposed on the public internet on a Google-acquisition subdomain. The login accepted default credentials, then accepted *any* password, and the API behind it answered unauthenticated requests — a complete failure of the authentication layer. Google's product team triaged it P2/S2 and decommissioned it nine days after accepting the report. The VRP reward panel, separately, awarded credit and no cash. This writeup breaks down the exposure, then does the harder and more useful thing: it explains, at a mechanism level, **why those two decisions are both correct and not in conflict** — and what evidence would have moved it across the reward bar. Calibrating that gap is the real skill.
 
 ---
 
@@ -25,7 +27,9 @@
 - [6. Why this was correctly not rewarded — and what would have changed that](#6-why-this-was-correctly-not-rewarded--and-what-would-have-changed-that)
 - [7. If I were defending this](#7-if-i-were-defending-this)
 - [8. Lessons I'm carrying forward](#8-lessons-im-carrying-forward)
+- [What this finding demonstrates](#what-this-finding-demonstrates)
 - [Timeline](#timeline)
+- [References](#references)
 
 ## Why I'm writing this
 
@@ -107,6 +111,14 @@ Via: 1.1 google
 
 So two independent controls — frontend authentication and backend authorization — were both absent on the same surface. That is the architecturally interesting part, and it is why the finding was *complete*: I didn't stop at "the login is fake," I demonstrated the data layer itself was open.
 
+> **Reproduction (read-only summary).**
+> 1. Resolve `rip.photomath.net` and load it over plain HTTP (`:443` fails the TLS handshake) — the admin UI (`GestionUsersRolesFrontend`) renders.
+> 2. At the `Bienvenue administrateur` login, submit `admin@photomath.net` with **any** password string → lands on `/dashboard`.
+> 3. `GET /api/roles` with **no** cookie or auth header → `200 OK`, body `[]` (not `401`/`403`).
+> 4. `OPTIONS /api/roles` → `Allow: POST,GET,HEAD,OPTIONS` — write methods advertised without auth.
+>
+> No writes were issued and no records were created or modified; steps 3–4 confirm the control failure without exercising the write path.
+
 **Scope of testing.** I confirmed read reachability and the advertised method set. I did **not** issue writes, create roles, or modify any state. Demonstrating reachability was sufficient to prove the control failure, and stopping there is what safe-harbor expectations require. Claiming the write path *worked* without exercising it would have been overclaiming; noting it was *advertised* is fact.
 
 ## 4. Remediation
@@ -187,6 +199,16 @@ The single control that would have prevented the entire exposure is the identity
 - **Edge-fronted is not operated-by.** Where a request routes tells you nothing about who owns the risk. That one distinction is the difference between a rewardable finding and a hygiene note.
 - **Calibration is the skill.** Anyone can find something that looks alarming. The professional move is stating accurately how much it matters — including, and especially, when the honest answer is "less than it first appeared."
 
+## What this finding demonstrates
+
+Read as a work sample, the useful signals here aren't the bug itself — they're how it was handled:
+
+- **Targeted recon, not spray-and-pray** — surfaced via the acquisition-tier scope file plus CT logs, a repeatable method for finding un-migrated infrastructure.
+- **Two-layer control analysis** — I checked whether the backend enforced authorization independently of the login form, not just the UI.
+- **Minimal-impact testing** — confirmed reachability and the advertised write methods without issuing a single write or touching any data.
+- **Severity calibration under pressure** — argued the finding accurately, conceded where my appeal was speculative, and agreed with the credit-only outcome once the evidence was clear.
+- **Coordinated disclosure** — reported through the vendor channel, waited for remediation, re-verified the fix (`NXDOMAIN`), and published only afterward.
+
 ## Timeline
 
 | Date | Day | Event |
@@ -197,6 +219,12 @@ The single control that would have prevented the entire exposure is the identity
 | 2026-05-29 | +24 | Reward panel: **does not meet the bar** → credit / Honorable Mention |
 | 2026-05-29 | +24 | I appealed for reconsideration |
 | 2026-06-02 | +28 | Appeal reviewed and **upheld** — credit-only confirmed (stale-DNS rationale) |
+
+## References
+
+- **MITRE CWE** — the weaknesses this finding maps to: [CWE-287: Improper Authentication](https://cwe.mitre.org/data/definitions/287.html), [CWE-1188: Use of Default Credentials](https://cwe.mitre.org/data/definitions/1188.html), [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html).
+- **[Google Bug Hunters (VRP)](https://bughunters.google.com/)** — the program this was reported through; its rules define what qualifies for a monetary reward versus credit, and underpin the reward decision analyzed in Section 6.
+- **Dangling DNS / subdomain takeover** — the risk class this belongs to: a DNS record that outlives the resource it points at. The detection and prevention controls in Section 7 are the defender's counterpart.
 
 ---
 
