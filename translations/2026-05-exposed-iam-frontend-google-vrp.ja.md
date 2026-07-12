@@ -129,6 +129,10 @@ Google の対応は迅速かつ的確でした。
 - **受理から九日後に「修正済」とマーク**——エンドポイントは停止され、ホスト名は `NXDOMAIN` を返し始めました。私は独立に `NXDOMAIN` を再検証し、報告し返しました。
 - 内部的に **P2 / S2** と判定。
 
+![Google Issue Tracker status: Accepted (comment #5) and Marked as fixed (comment #6)](../images/rip-tracker-accepted-fixed.png)
+
+*トラッカー自身の更新——報告の翌日に受理、九日後に修正済とマーク。Google の文言はそのまま残し、送信者アドレスは省いています。誠実に較正すると、お祝いの「🎉 Nice catch!」はプログラム**標準の受理テンプレート**であって個人的な称賛ではありません。本当に効いてくるのは P2/S2 のトリアージと確認済みの修正です。*
+
 ![rip.photomath.net は現在 DNS_PROBE_FINISHED_NXDOMAIN を返す](../images/rip-nxdomain-fixed.png)
 
 *どのように*修正されたかに注目してください——コードのパッチでも、認証ミドルウェアの変更でもなく、レコードが引き抜かれ、ホストは解決しなくなりました。この一点が報奨判断のすべての鍵であり、次節の主題です。

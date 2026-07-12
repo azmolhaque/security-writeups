@@ -129,6 +129,10 @@ Googles Handhabung war schnell und sauber:
 - **Neun Tage nach der Annahme als Behoben markiert** — der Endpunkt wurde stillgelegt und der Hostname begann, `NXDOMAIN` zurückzugeben. Ich habe das `NXDOMAIN` unabhängig erneut verifiziert und zurückgemeldet.
 - Intern als **P2 / S2** eingestuft.
 
+![Google Issue Tracker status: Accepted (comment #5) and Marked as fixed (comment #6)](../images/rip-tracker-accepted-fixed.png)
+
+*Die Statusmeldungen des Trackers selbst — am Tag nach der Meldung angenommen, neun Tage später als behoben markiert. Ich behalte Googles genaue Formulierung bei und lasse die Absenderadressen weg. Und um es ehrlich einzuordnen: das feierliche „Nice catch!“ ist die **Standard-Annahmevorlage** des Programms, kein persönliches Lob — entscheidend sind die P2/S2-Einstufung und der bestätigte Fix.*
+
 ![rip.photomath.net gibt jetzt DNS_PROBE_FINISHED_NXDOMAIN zurück](../images/rip-nxdomain-fixed.png)
 
 Beachten Sie, *wie* es behoben wurde: kein Code-Patch, keine Änderung an einer Auth-Middleware — der Eintrag wurde gezogen und der Host löste sich nicht mehr auf. Dieses Detail ist der ganze Schlüssel zur Belohnungsentscheidung und Gegenstand des nächsten Abschnitts.

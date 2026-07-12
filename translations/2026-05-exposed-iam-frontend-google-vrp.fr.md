@@ -129,6 +129,10 @@ Le traitement par Google a été rapide et net :
 - **Marqué Corrigé neuf jours après l'acceptation** — l'endpoint a été démantelé et le nom d'hôte a commencé à renvoyer `NXDOMAIN`. J'ai revérifié le `NXDOMAIN` de manière indépendante et l'ai signalé en retour.
 - Classé en interne comme **P2 / S2**.
 
+![Google Issue Tracker status: Accepted (comment #5) and Marked as fixed (comment #6)](../images/rip-tracker-accepted-fixed.png)
+
+*Les mises à jour du tracker lui-même — accepté le lendemain du signalement, marqué corrigé neuf jours plus tard. Je conserve la formulation exacte de Google et masque les adresses de l'expéditeur. Et pour le calibrer honnêtement : le « Nice catch! » festif est le **modèle d'acceptation standard** du programme, non un compliment personnel ; ce qui compte vraiment, c'est le triage P2/S2 et le correctif confirmé.*
+
 ![rip.photomath.net renvoie désormais DNS_PROBE_FINISHED_NXDOMAIN](../images/rip-nxdomain-fixed.png)
 
 Notez *comment* cela a été corrigé : pas un correctif de code, pas un changement de middleware d'authentification — le registre a été retiré et l'hôte a cessé de se résoudre. Ce détail est toute la clé de la décision de récompense, et c'est le sujet de la section suivante.
