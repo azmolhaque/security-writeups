@@ -133,8 +133,6 @@ Google's handling was fast and clean:
 
 *The tracker's own updates — accepted the day after reporting, marked fixed nine days later. I've kept Google's exact wording and omitted the sender addresses. And to calibrate it honestly: the celebratory "Nice catch!" is the program's **standard acceptance template**, not a personal accolade — the facts that actually carry weight are the P2/S2 triage and the confirmed fix.*
 
-I also verified the fix independently — the hostname began returning `NXDOMAIN`:
-
 ![rip.photomath.net now returns DNS_PROBE_FINISHED_NXDOMAIN](./images/rip-nxdomain-fixed.png)
 
 Note *how* it was fixed: not a code patch, not an auth middleware change — the record was pulled and the host stopped resolving. That detail is the whole key to the reward decision, and it's the subject of the next section.
