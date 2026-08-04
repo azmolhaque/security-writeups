@@ -4,6 +4,13 @@ Selected security research and vulnerability writeups by **Md. Azmol Haque Rony*
 
 ## 📄 Writeups
 
+### [The Same Model, 4.6× the Exposure — Prompt-Injection Resistance](./2026-07-prompt-injection-content-dependent.md)
+A measured, reproducible look at prompt-injection resistance in a small local LLM (Llama 3.2 3B, via **garak**, 256 trials per attack). The same model was hijacked **46.9%** of the time by one payload but only **10.2%** by another — a **4.6× content-dependent gap** whose 95% confidence intervals don't overlap.
+
+The core lesson: injection resistance is a **distribution, not a single number** — test one payload and you can be off by multiples from your real threat. Includes the safety-training explanation, the defender's takeaways, full reproduction steps on a Raspberry Pi, and honest limitations (including a third probe that stalled and why it was excluded).
+
+🌐 **Also available in 9 languages** — see the language bar at the top of the writeup (English · Español · Français · Deutsch · العربية · हिन्दी · বাংলা · 简体中文 · 日本語).
+
 ### [Anatomy of an Exposed IAM Frontend — Google VRP](./2026-05-exposed-iam-frontend-google-vrp.md)
 A total authentication bypass on a Google-acquisition asset (`rip.photomath.net`) — default credentials, *any* password accepted, and an unauthenticated backend API. Triaged **P2/S2, Fixed in 9 days**, and awarded **credit (Honorable Mention)**, not cash.
 
