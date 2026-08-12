@@ -1,6 +1,6 @@
 # Security Writeups
 
-Selected security research and vulnerability writeups by **Md. Azmol Haque Rony** ([@azmolhaque](https://github.com/azmolhaque)).
+Selected security research and vulnerability writeups by **Md. Azmol Haque Rony** ([@azmolhaque](https://github.com/azmolhaque)), founder of [Cindrasec](https://cindrasec.com) — an attack-surface and AI/LLM security studio. These two are also published at [cindrasec.com/research/](https://cindrasec.com/research/), which is the canonical, kept-in-sync version; this repo remains the source for the 9-language translations.
 
 ## 📄 Writeups
 

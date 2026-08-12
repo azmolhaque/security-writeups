@@ -1,5 +1,7 @@
 # Anatomy of an Exposed IAM Frontend
 
+> **Canonical version:** [cindrasec.com/research/2026-05-exposed-iam-frontend-google-vrp/](https://cindrasec.com/research/2026-05-exposed-iam-frontend-google-vrp/) — this copy stays in sync, but that page is the source of record and the one to cite or link to.
+
 **A total authentication bypass on a Google-acquisition asset — and a precise account of why it was fixed in nine days, and correctly rewarded $0.**
 
 **🌐 Read this in your language:** **English** · [Español](./translations/2026-05-exposed-iam-frontend-google-vrp.es.md) · [Français](./translations/2026-05-exposed-iam-frontend-google-vrp.fr.md) · [Deutsch](./translations/2026-05-exposed-iam-frontend-google-vrp.de.md) · [العربية](./translations/2026-05-exposed-iam-frontend-google-vrp.ar.md) · [हिन्दी](./translations/2026-05-exposed-iam-frontend-google-vrp.hi.md) · [বাংলা](./translations/2026-05-exposed-iam-frontend-google-vrp.bn.md) · [简体中文](./translations/2026-05-exposed-iam-frontend-google-vrp.zh.md) · [日本語](./translations/2026-05-exposed-iam-frontend-google-vrp.ja.md)
