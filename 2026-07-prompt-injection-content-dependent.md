@@ -1,5 +1,7 @@
 # The Same Model, 4.6× the Exposure
 
+> **Canonical version:** [cindrasec.com/research/2026-07-prompt-injection-content-dependent/](https://cindrasec.com/research/2026-07-prompt-injection-content-dependent/) — this copy stays in sync, but that page is the source of record and the one to cite or link to.
+
 **A measured look at prompt-injection resistance in a small local LLM — and why a single "resistance score" is misleading.**
 
 **🌐 Read this in your language:** **English** · [Español](./translations/2026-07-prompt-injection-content-dependent.es.md) · [Français](./translations/2026-07-prompt-injection-content-dependent.fr.md) · [Deutsch](./translations/2026-07-prompt-injection-content-dependent.de.md) · [العربية](./translations/2026-07-prompt-injection-content-dependent.ar.md) · [हिन्दी](./translations/2026-07-prompt-injection-content-dependent.hi.md) · [বাংলা](./translations/2026-07-prompt-injection-content-dependent.bn.md) · [简体中文](./translations/2026-07-prompt-injection-content-dependent.zh.md) · [日本語](./translations/2026-07-prompt-injection-content-dependent.ja.md)
