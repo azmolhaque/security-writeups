@@ -22,3 +22,17 @@ The writeup does the harder thing: it explains, at a mechanism level, **why "fix
 
 ### [The bug Google fixed in 9 days — and paid me $0 for](./the-9-day-fix-that-paid-nothing.md)
 A short, plain-language version of the same story — written for a general audience. If the full writeup is the engineering deep-dive, this is the five-minute read about *why calibrated judgment matters more than a payout*.
+
+## 🔍 [Leads](./leads/)
+
+Work that is real and honestly recorded, but **not yet strong enough to claim anything** —
+below the trial count the published writeups above are held to. Kept separate on purpose,
+because the difference between "this is true" and "this is worth investigating" is the
+difference the rest of this repository is built on. Not to be cited as results.
+
+- [Instruction-delivery channel and injection compliance in an ADK/MCP agent](./leads/2026-08-adk-mcp-instruction-delivery-channel.md)
+  — an agent's dataset restriction, expressed only in its system prompt, sitting on a
+  credential that reached far wider. Refused three escalating direct requests; via tool
+  output the same instruction was received intact and never treated as an instruction at
+  all. Single run. Direction-consistent with the 256-trial study above, on a different
+  stack — which is exactly why it is filed here and not beside it.
